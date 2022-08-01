@@ -15,7 +15,7 @@ function App() {
       </nav>
     </header>
     <main className="flex-grow overflow-y-auto p-10">
-      <LoremImpsum />
+      <LoremImpsum /><br/>
       <KitchenSink />
     </main>
     <footer className="flex-shrink-0 bg-slate-900 border-t-2 border-slate-800 shadow-2xl">

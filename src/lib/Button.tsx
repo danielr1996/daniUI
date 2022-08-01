@@ -1,27 +1,43 @@
 import React, {FunctionComponent, ReactElement} from "react";
 import classNames from "classnames/dedupe";
 
-type Props = {
+type HeadlessButtonProps = {
+    className: string
     children: ReactElement
 }
-
-const buttonFactory = (classes: string)=>({children}: Props) => {
+const HeadlessButton: FunctionComponent<HeadlessButtonProps> = ({className, children}) => {
     const button = children
-    const className = classNames(button.props.className,classes)
+
+    const newClassName = classNames(button.props.className, className)
     const props = {
         type: 'button',
         ...button.props,
-        className
+        className: newClassName
     }
     return React.cloneElement(button, props)
 }
 
-
-export const Button: FunctionComponent<Props> = ({children})=>{
-
-    return buttonFactory(classNames('text-black',
-        'bg-amber-500',
+type Props = {
+    children: ReactElement,
+    type?: 'error' | 'primary' | 'accent'
+    className?: string,
+}
+export const Button: FunctionComponent<Props> = ({children, type,className}) => {
+    const newClassName = classNames(
+        {
+            'bg-red-500': type === 'error',
+            'bg-blue-500': type === 'primary',
+            'bg-amber-500': type === 'accent',
+            'bg-white': !type,
+            // @ts-ignore
+            'text-black': ['error'].includes(type),
+            // @ts-ignore
+            'text-white': ['primary'].includes(type),
+        },
         'rounded-lg',
         'py-1',
-        'px-3',))({children})
+        'px-3',className)
+    return <HeadlessButton className={newClassName}>{children}</HeadlessButton>
 }
+
+
