@@ -1,28 +1,31 @@
 import React, {FunctionComponent, ReactElement} from "react";
 import classNames from "classnames/dedupe";
+import {ReactUtil} from "./reactUtils";
+import {CommonProps} from "./CommonProps";
 
 type HeadlessButtonProps = {
-    className: string
+    className?: string
     children: ReactElement
-}
-const HeadlessButton: FunctionComponent<HeadlessButtonProps> = ({className, children}) => {
-    const button = children
+} & CommonProps
 
-    const newClassName = classNames(button.props.className, className)
+export const HeadlessButton: FunctionComponent<HeadlessButtonProps> = ({className, children, wrapper}) => {
+    let button = children
+
     const props = {
         type: 'button',
         ...button.props,
-        className: newClassName
+        className: classNames(button.props.className, className)
     }
-    return React.cloneElement(button, props)
+    const newButton = ReactUtil.mergeElement(button, props)
+    return wrapper ? wrapper(newButton) : newButton
 }
 
 type Props = {
     children: ReactElement,
     type?: 'error' | 'primary' | 'accent'
-    className?: string,
-}
-export const Button: FunctionComponent<Props> = ({children, type,className}) => {
+    className?: string
+} & CommonProps
+export const Button: FunctionComponent<Props> = ({children, type,className,wrapper}) => {
     const newClassName = classNames(
         {
             'bg-red-500': type === 'error',
@@ -37,7 +40,7 @@ export const Button: FunctionComponent<Props> = ({children, type,className}) => 
         'rounded-lg',
         'py-1',
         'px-3',className)
-    return <HeadlessButton className={newClassName}>{children}</HeadlessButton>
+    return <HeadlessButton wrapper={wrapper} className={newClassName}>{children}</HeadlessButton>
 }
 
 
