@@ -2,7 +2,7 @@ import {Button} from "./lib/Button";
 import {ButtonBar} from "./lib/ButtonBar";
 
 export function KitchenSink() {
-    return <article className="prose dark:prose-invert prose-neutral">
+    return <article className="">
         <h1>Kitchensink</h1>
         <section>
             <h2>Button</h2>
@@ -26,6 +26,9 @@ export function KitchenSink() {
                 </Button>
                 <Button type="error">
                     <button>Error</button>
+                </Button>
+                <Button type="accent">
+                    <button>Accent</button>
                 </Button>
                 <Button type="accent" wrapper={e => <span className="relative">
                     {e}

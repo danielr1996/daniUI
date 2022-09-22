@@ -6,7 +6,7 @@ import {KitchenSink} from "./KitchenSink";
 
 function App() {
   return <div className="flex flex-col h-screen overflow-y-hidden">
-    <header className="flex-shrink-0 shadow-2xl bg-slate-900 sticky w-100 border-b-2 border-slate-800">
+    <header className="flex-shrink-0 shadow-2xl  sticky w-100 border-b-2 border-slate-800">
       <nav>
         <ul className="flex flex-row p-5 text-xl">
           <li className="mr-2">Home</li>
@@ -18,7 +18,7 @@ function App() {
       {/*<LoremImpsum /><br/>*/}
       <KitchenSink />
     </main>
-    <footer className="flex-shrink-0 bg-slate-900 border-t-2 border-slate-800 shadow-2xl">
+    <footer className="flex-shrink-0  border-t-2 border-slate-800 shadow-2xl">
       <nav>
         <ul className="flex flex-row p-5 text-sm">
           <li className="mr-2">Copyright</li>

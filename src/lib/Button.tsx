@@ -1,46 +1,43 @@
 import React, {FunctionComponent, ReactElement} from "react";
 import classNames from "classnames/dedupe";
 import {ReactUtil} from "./reactUtils";
-import {CommonProps} from "./CommonProps";
-
-type HeadlessButtonProps = {
-    className?: string
-    children: ReactElement
-} & CommonProps
-
-export const HeadlessButton: FunctionComponent<HeadlessButtonProps> = ({className, children, wrapper}) => {
-    let button = children
-
-    const props = {
-        type: 'button',
-        ...button.props,
-        className: classNames(button.props.className, className)
-    }
-    const newButton = ReactUtil.mergeElement(button, props)
-    return wrapper ? wrapper(newButton) : newButton
-}
+import {Color, CommonProps} from "./CommonProps";
 
 type Props = {
     children: ReactElement,
-    type?: 'error' | 'primary' | 'accent'
+    type: Color
     className?: string
 } & CommonProps
-export const Button: FunctionComponent<Props> = ({children, type,className,wrapper}) => {
+export const Button: FunctionComponent<Props> = ({children, type = 'primary',wrapper, className=''}) => {
+    const button = children
+
     const newClassName = classNames(
         {
-            'bg-red-500': type === 'error',
-            'bg-blue-500': type === 'primary',
-            'bg-amber-500': type === 'accent',
-            'bg-white': !type,
-            // @ts-ignore
-            'text-black': ['error'].includes(type),
-            // @ts-ignore
+            'bg-primary-400': type === 'primary',
+            'bg-secondary-400': type === 'secondary',
+            'bg-accent-400': type === 'accent',
+            'bg-information': type === 'information',
+            'bg-success': type === 'success',
+            'bg-warning': type === 'warning',
+            'bg-error': type === 'error',
+            'bg-white': type === 'white',
+            'bg-gray': type === 'gray',
+            'bg-black': type === 'black',
+            'text-black': ['error', 'accent'].includes(type),
             'text-white': ['primary'].includes(type),
         },
         'rounded-lg',
         'py-1',
-        'px-3',className)
-    return <HeadlessButton wrapper={wrapper} className={newClassName}>{children}</HeadlessButton>
+        'px-3',
+        className)
+    const props = {
+        type: 'button',
+        ...button.props,
+        className: classNames(button.props.className, newClassName)
+    }
+    const newButton = ReactUtil.mergeElement(button, props)
+    // return <HeadlessButton wrapper={wrapper} className={newClassName}>{children}</HeadlessButton>
+    return wrapper ? wrapper(newButton) : newButton
 }
 
 
